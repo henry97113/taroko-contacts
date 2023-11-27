@@ -1,7 +1,7 @@
 import ky from "ky";
 import { z } from "zod";
 
-import { env } from "@/env";
+const BASE_URL = "http://localhost:3000";
 
 const contactSchema = z.object({
   id: z.number(),
@@ -55,7 +55,7 @@ export const contactsData: z.infer<typeof contactsSchema> = [
 
 export async function getContacts() {
   const { data } = await ky
-    .get(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts`)
+    .get(`${BASE_URL}/api/contacts`)
     .json<{ data: unknown }>();
   return contactsSchema.parse(data);
 }
@@ -69,7 +69,7 @@ const postContactSchema = z.object({
 
 export async function postContact(contact: z.infer<typeof postContactSchema>) {
   const { data } = await ky
-    .post(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts`, {
+    .post(`${BASE_URL}/api/contacts`, {
       json: {
         contact,
       },
@@ -91,7 +91,7 @@ export async function patchContact(
 ) {
   const { id, ...delegated } = payload;
   const { data } = await ky
-    .patch(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts/${id}`, {
+    .patch(`${BASE_URL}/api/contacts/${id}`, {
       json: { info: { ...delegated } },
     })
     .json<{ data: unknown }>();
@@ -100,7 +100,7 @@ export async function patchContact(
 
 export async function deleteContact(id: number) {
   const { data } = await ky
-    .delete(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts/${id}`)
+    .delete(`${BASE_URL}/api/contacts/${id}`)
     .json<{ data: unknown }>();
   return contactSchema.parse(data);
 }
