@@ -1,8 +1,9 @@
+import ky from "ky";
 import { z } from "zod";
 
-import { delay } from "@/utils";
+import { env } from "@/env";
 
-const Contact = z.object({
+const contactSchema = z.object({
   id: z.number(),
   first_name: z.string(),
   last_name: z.string(),
@@ -10,9 +11,11 @@ const Contact = z.object({
   description: z.string(),
 });
 
-export type Contact = z.infer<typeof Contact>;
+const contactsSchema = contactSchema.array();
 
-export const contactsData: Contact[] = [
+export type Contact = z.infer<typeof contactSchema>;
+
+export const contactsData: z.infer<typeof contactsSchema> = [
   {
     id: 1,
     first_name: "Luke",
@@ -51,6 +54,42 @@ export const contactsData: Contact[] = [
 ];
 
 export async function getContacts() {
-  await delay(3000);
-  return contactsData;
+  const { data } = await ky
+    .get(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts`)
+    .json<{ data: unknown }>();
+  return contactsSchema.parse(data);
+}
+
+export async function postContacts(contact: Omit<Contact, "id">) {
+  const { data } = await ky
+    .post(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts`, { json: contact })
+    .json<{ data: unknown }>();
+  return contactSchema.parse(data);
+}
+
+const patchContactSchema = z.object({
+  id: z.number(),
+  first_name: z.string().optional(),
+  last_name: z.string().optional(),
+  job: z.string().optional(),
+  description: z.string().optional(),
+});
+
+export async function patchContacts(
+  payload: z.infer<typeof patchContactSchema>,
+) {
+  const { id, ...delegated } = payload;
+  const { data } = await ky
+    .patch(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts/${id}`, {
+      json: delegated,
+    })
+    .json<{ data: unknown }>();
+  return contactSchema.parse(data);
+}
+
+export async function deleteContacts(id: number) {
+  const { data } = await ky
+    .delete(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts/${id}`)
+    .json<{ data: unknown }>();
+  return contactSchema.parse(data);
 }
