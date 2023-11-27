@@ -8,5 +8,6 @@
 
 1. Clone the repo
 2. Start the `taroko_server` (It should be on port `3000`)
-3. Run `npm run dev`
-4. Open the page `localhost:3001`
+3. Run `npm i` to install dependency.
+4. Run `npm run dev` to start the dev server.
+5. Open the page on `localhost:3001`.
