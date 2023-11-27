@@ -35,7 +35,39 @@
   background-color: hsl(var(--primary) / 0.9);
 }
 
+.button.secondary {
+  background-color: hsl(var(--secondary));
+}
+.button.secondary:hover {
+  color: hsl(var(--secondary-foreground));
+  background-color: hsl(var(--secondary) / 0.8);
+}
+
+.button.outline {
+  border: 1px solid hsl(var(--input));
+  background-color: hsl(var(--background));
+}
+.button.outline:hover {
+  color: hsl(var(--accent-foreground));
+  background-color: hsl(var(--accent));
+}
+
+.button.destructive {
+  background-color: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+}
+.button.destructive:hover {
+  background-color: hsl(var(--destructive) / 0.9);
+}
+
 /* Sizes */
+/* h-9 rounded-md px-3 */
+.button.sm {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  height: 2.25rem;
+}
+
 .button.md {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;

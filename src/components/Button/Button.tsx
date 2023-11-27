@@ -4,7 +4,7 @@ import { clsx } from "clsx";
 import styles from "./Button.module.css";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "outline" | "destructive";
+  variant?: "primary" | "secondary" | "outline" | "destructive";
   size?: "sm" | "md" | "lg" | "icon";
 };
 
