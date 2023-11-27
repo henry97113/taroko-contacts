@@ -3,22 +3,27 @@
 import * as React from "react";
 import { ArrowDownAZ, ArrowDownZA } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
-import { type Contact as ContactType } from "@/helpers/contacts";
+import { getContacts, type Contact as ContactType } from "@/helpers/contacts";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import VisuallyHidden from "@/components/VisuallyHidden";
 
-import styles from "./ContactList.module.css";
 import Contact from "../Contact";
+import styles from "./ContactList.module.css";
+import LoadingSpinner from "../LoadingSpinner";
 
 type SortDirection = "asc" | "desc";
 
 type ContactListProps = {
-  contacts: ContactType[];
+  initialData: ContactType[];
 };
 
-function ContactList({ contacts }: ContactListProps) {
+function ContactList({ initialData }: ContactListProps) {
+  const { data: contacts, isLoading } = useSWR("/api/contacts", getContacts, {
+    fallbackData: initialData,
+  });
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams()!;
@@ -45,6 +50,20 @@ function ContactList({ contacts }: ContactListProps) {
     },
     [searchParams],
   );
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (contacts.length === 0) {
+    return (
+      <Container>
+        <div className={styles.wrapper}>
+          <p className={styles["no-result"]}>No contacts found</p>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container>

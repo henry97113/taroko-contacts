@@ -33,3 +33,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+.no-result {
+  text-align: center;
+}
