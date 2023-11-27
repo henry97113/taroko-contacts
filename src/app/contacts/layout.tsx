@@ -1,3 +1,5 @@
+import Header from "./_components/Header";
+
 export const metadata = {
   title: "My Contacts",
   description: "List all my contacts",
@@ -9,5 +11,10 @@ export default function ContactsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <main>{children}</main>;
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+    </>
+  );
 }
