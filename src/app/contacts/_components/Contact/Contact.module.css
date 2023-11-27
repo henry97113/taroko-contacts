@@ -1,0 +1,20 @@
+.wrapper {
+  border: 1px solid hsl(var(--border));
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+}
+
+.top {
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+.contact-info {
+  flex-grow: 1;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}

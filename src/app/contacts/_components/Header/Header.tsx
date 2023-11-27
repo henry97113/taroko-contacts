@@ -8,7 +8,7 @@ import styles from "./Header.module.css";
 function Header() {
   return (
     <header className={styles.header}>
-      <Link href="/" className={styles["header-link"]}>
+      <Link href="/contacts" className={styles["header-link"]}>
         <h1>My Contacts</h1>
       </Link>
       <AddContactButton />

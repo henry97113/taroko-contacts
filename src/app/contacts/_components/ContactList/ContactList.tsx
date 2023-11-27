@@ -2,13 +2,14 @@
 
 import * as React from "react";
 
-import { type Contact } from "@/helpers/contacts";
+import { type Contact as ContactType } from "@/helpers/contacts";
 
 import styles from "./ContactList.module.css";
 import Container from "@/components/Container";
+import Contact from "../Contact";
 
 type ContactListProps = {
-  contacts: Contact[];
+  contacts: ContactType[];
 };
 
 function ContactList({ contacts }: ContactListProps) {
@@ -16,9 +17,7 @@ function ContactList({ contacts }: ContactListProps) {
     <Container>
       <div className={styles.wrapper}>
         {contacts.map((contact) => (
-          <div key={contact.id} className={styles.apple}>
-            {contact.first_name}
-          </div>
+          <Contact key={contact.id} contact={contact} />
         ))}
       </div>
     </Container>
