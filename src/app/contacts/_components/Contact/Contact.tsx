@@ -6,6 +6,8 @@ import styles from "./Contact.module.css";
 import Button from "@/components/Button";
 import Separator from "@/components/Separator";
 
+import EditContact from "../EditContact";
+
 type ContactProps = {
   contact: ContactType;
 };
@@ -25,7 +27,7 @@ function Contact({ contact }: ContactProps) {
           </div>
         </div>
         <div className={styles.actions}>
-          <EditButton />
+          <EditContact contact={contact} />
           <DeleteButton />
         </div>
       </div>
@@ -37,17 +39,17 @@ function Contact({ contact }: ContactProps) {
   );
 }
 
-function EditButton() {
-  function openEditContactDialog() {
-    console.log("Open edit contact dialog");
-  }
+// function EditButton() {
+//   function openEditContactDialog() {
+//     console.log("Open edit contact dialog");
+//   }
 
-  return (
-    <Button variant="outline" size="sm" onClick={openEditContactDialog}>
-      Edit
-    </Button>
-  );
-}
+//   return (
+//     <Button variant="outline" size="sm" onClick={openEditContactDialog}>
+//       Edit
+//     </Button>
+//   );
+// }
 
 function DeleteButton() {
   function openDeleteContactDialog() {
