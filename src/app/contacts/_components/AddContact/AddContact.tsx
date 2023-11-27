@@ -36,13 +36,21 @@ export function AddContact() {
       description: values.description,
     };
 
-    await postContact(payload);
-    await mutate("/api/contacts");
-    toast({
-      title: "New user added",
-      description: `${fullName} has been added to your contacts!`,
-    });
-    setIsOpen(false);
+    try {
+      await postContact(payload);
+      await mutate("/api/contacts");
+      toast({
+        title: "New user added",
+        description: `${fullName} has been added to your contacts!`,
+      });
+      setIsOpen(false);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong.",
+        description: `Something went wrong. Please try again later.`,
+      });
+    }
   }
 
   return (

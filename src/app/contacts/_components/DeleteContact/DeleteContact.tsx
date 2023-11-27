@@ -27,13 +27,22 @@ function DeleteContact({ contactId }: DeleteContactProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   async function handleClick() {
-    await deleteContact(contactId);
-    await mutate("/api/contacts");
-    toast({
-      variant: "destructive",
-      description: `User has been deleted.`,
-    });
-    setIsOpen(false);
+    try {
+      await deleteContact(contactId);
+      await mutate("/api/contacts");
+      toast({
+        title: "User deleted",
+        description: `User has been deleted.`,
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong.",
+        description: `Something went wrong. Please try again later.`,
+      });
+    } finally {
+      setIsOpen(false);
+    }
   }
 
   return (

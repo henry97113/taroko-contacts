@@ -48,14 +48,22 @@ function EditContact({ contact }: EditContactProps) {
       description: values.description,
     };
 
-    await patchContact(payload);
-    await mutate("/api/contacts");
+    try {
+      await patchContact(payload);
+      await mutate("/api/contacts");
 
-    toast({
-      title: "User Edited",
-      description: `Changes to ${fullName} have been saved!`,
-    });
-    setIsOpen(false);
+      toast({
+        title: "User Edited",
+        description: `Changes to ${fullName} have been saved!`,
+      });
+      setIsOpen(false);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong.",
+        description: `Something went wrong. Please try again later.`,
+      });
+    }
   }
 
   return (
