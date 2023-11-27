@@ -167,7 +167,7 @@
 }
 
 .toast-close:hover {
-  color: hsl(var(--background));
+  color: hsl(var(--foreground));
   opacity: 1;
 }
 
