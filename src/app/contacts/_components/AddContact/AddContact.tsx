@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSWRConfig } from "swr";
 
 import {
   Dialog,
@@ -17,16 +18,26 @@ import Button from "@/components/Button";
 import { type ContactForm as ContactFormType } from "../../_helpers/contactForm";
 import ContactForm from "../ContactForm";
 import styles from "./AddContact.module.css";
+import { postContact } from "@/helpers/contacts";
 
 export function AddContact() {
+  const { mutate } = useSWRConfig();
   const { toast } = useToast();
   const [isOpen, setIsOpen] = React.useState(false);
   const formId = "add-contact-form";
 
-  function handleSubmit(values: ContactFormType) {
+  async function handleSubmit(values: ContactFormType) {
     const fullName = `${values.firstName} ${values.lastName}`.trim();
 
-    console.log(values);
+    const payload = {
+      first_name: values.firstName,
+      last_name: values.lastName,
+      job: values.job,
+      description: values.description,
+    };
+
+    await postContact(payload);
+    await mutate("/api/contacts");
     toast({
       title: "New user added",
       description: `${fullName} has been added to your contacts!`,

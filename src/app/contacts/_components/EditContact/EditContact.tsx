@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSWRConfig } from "swr";
 
 import {
   Dialog,
@@ -13,7 +14,7 @@ import {
 } from "@/components/Dialog";
 import { useToast } from "@/components/Toast";
 import Button from "@/components/Button";
-import { type Contact } from "@/helpers/contacts";
+import { patchContact, type Contact } from "@/helpers/contacts";
 
 import { type ContactForm as ContactFormType } from "../../_helpers/contactForm";
 import ContactForm from "../ContactForm";
@@ -24,6 +25,7 @@ type EditContactProps = {
 };
 
 function EditContact({ contact }: EditContactProps) {
+  const { mutate } = useSWRConfig();
   const { toast } = useToast();
   const [isOpen, setIsOpen] = React.useState(false);
   const formId = "edit-contact-form";
@@ -35,10 +37,20 @@ function EditContact({ contact }: EditContactProps) {
     description: contact.description,
   };
 
-  function handleSubmit(values: ContactFormType) {
+  async function handleSubmit(values: ContactFormType) {
     const fullName = `${values.firstName} ${values.lastName}`.trim();
 
-    console.log(values);
+    const payload = {
+      id: contact.id,
+      first_name: values.firstName,
+      last_name: values.lastName,
+      job: values.job,
+      description: values.description,
+    };
+
+    await patchContact(payload);
+    await mutate("/api/contacts");
+
     toast({
       title: "User Edited",
       description: `Changes to ${fullName} have been saved!`,

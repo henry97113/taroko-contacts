@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSWRConfig } from "swr";
 
 import {
   AlertDialog,
@@ -14,17 +15,20 @@ import {
 } from "@/components/AlertDialog";
 import Button from "@/components/Button";
 import { useToast } from "@/components/Toast";
+import { deleteContact } from "@/helpers/contacts";
 
 type DeleteContactProps = {
   contactId: number;
 };
 
 function DeleteContact({ contactId }: DeleteContactProps) {
+  const { mutate } = useSWRConfig();
   const { toast } = useToast();
   const [isOpen, setIsOpen] = React.useState(false);
 
-  async function deleteContact() {
-    console.log(`Deleting contact: ${contactId}`);
+  async function handleClick() {
+    await deleteContact(contactId);
+    await mutate("/api/contacts");
     toast({
       variant: "destructive",
       description: `User has been deleted.`,
@@ -49,7 +53,7 @@ function DeleteContact({ contactId }: DeleteContactProps) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button variant="destructive" onClick={deleteContact}>
+          <Button variant="destructive" onClick={handleClick}>
             Delete
           </Button>
         </AlertDialogFooter>

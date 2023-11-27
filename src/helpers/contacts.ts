@@ -60,9 +60,20 @@ export async function getContacts() {
   return contactsSchema.parse(data);
 }
 
-export async function postContacts(contact: Omit<Contact, "id">) {
+const postContactSchema = z.object({
+  first_name: z.string(),
+  last_name: z.string(),
+  job: z.string(),
+  description: z.string(),
+});
+
+export async function postContact(contact: z.infer<typeof postContactSchema>) {
   const { data } = await ky
-    .post(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts`, { json: contact })
+    .post(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts`, {
+      json: {
+        contact,
+      },
+    })
     .json<{ data: unknown }>();
   return contactSchema.parse(data);
 }
@@ -75,19 +86,19 @@ const patchContactSchema = z.object({
   description: z.string().optional(),
 });
 
-export async function patchContacts(
+export async function patchContact(
   payload: z.infer<typeof patchContactSchema>,
 ) {
   const { id, ...delegated } = payload;
   const { data } = await ky
     .patch(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts/${id}`, {
-      json: delegated,
+      json: { info: { ...delegated } },
     })
     .json<{ data: unknown }>();
   return contactSchema.parse(data);
 }
 
-export async function deleteContacts(id: number) {
+export async function deleteContact(id: number) {
   const { data } = await ky
     .delete(`${env.NEXT_PUBLIC_API_BASE_URL}/api/contacts/${id}`)
     .json<{ data: unknown }>();
