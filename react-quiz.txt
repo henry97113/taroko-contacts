@@ -1,0 +1,12 @@
+> Quiz: Which one of the 2 is a better way to code the component? Why?
+
+If you are working on a vanilla JavaScript project, it is recommended to use option 1 to achieve better performance, especially when dealing with long lists. This is because attaching only one event listener to the parent node is more efficient compared to attaching it to every child node. This technique is also known as event delegation.
+
+However, in React, the process is different. When attaching event listeners to all child nodes, as shown in the second code snippet, React does not directly attach the listeners to each child node like in vanilla JavaScript. Instead, it uses event delegation and only attaches listeners to the root node (link 1). The performance difference should not be noticeable in two different implementations (link 2).
+
+Based on the reasoning above, I would choose option 2, since creating our own event delegation does not provide additional performance benefits (React already handles it for us), and attaching the listeners to child nodes seems more intuitive to me.
+
+## References
+
+1. [Event delegation in React #13635](https://github.com/facebook/react/issues/13635#issuecomment-421085767)
+2. [Should I use event delegation in React?](https://dev.to/thawsitt/should-i-use-event-delegation-in-react-nl0)
