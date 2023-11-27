@@ -2,10 +2,8 @@
 
 import * as React from "react";
 
-import Button from "@/components/Button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -13,12 +11,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/Dialog";
+import Button from "@/components/Button";
 
+import { type ContactForm as ContactFormType } from "../../_helpers/contactForm";
+import ContactForm from "../ContactForm";
 import styles from "./AddContact.module.css";
 
 export function AddContact() {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const formId = "add-contact-form";
+
+  function handleSubmit(values: ContactFormType) {
+    console.log(values);
+    setIsOpen(false);
+  }
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Add Contact</Button>
       </DialogTrigger>
@@ -29,17 +38,11 @@ export function AddContact() {
             Add a new contact here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
+        <ContactForm formId={formId} handleSubmit={handleSubmit} />
         <DialogFooter>
-          <DialogClose asChild>
-            <Button
-              type="submit"
-              onClick={() => {
-                console.log("asdf");
-              }}
-            >
-              Save
-            </Button>
-          </DialogClose>
+          <Button type="submit" form={formId}>
+            Save
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
