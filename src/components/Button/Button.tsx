@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 
 import styles from "./Button.module.css";
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary" | "outline" | "destructive";
   size?: "sm" | "md" | "lg" | "icon";
 };

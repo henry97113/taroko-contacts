@@ -2,11 +2,11 @@ import * as React from "react";
 
 import { type Contact as ContactType } from "@/helpers/contacts";
 
-import styles from "./Contact.module.css";
-import Button from "@/components/Button";
 import Separator from "@/components/Separator";
 
+import DeleteContact from "../DeleteContact";
 import EditContact from "../EditContact";
+import styles from "./Contact.module.css";
 
 type ContactProps = {
   contact: ContactType;
@@ -28,7 +28,7 @@ function Contact({ contact }: ContactProps) {
         </div>
         <div className={styles.actions}>
           <EditContact contact={contact} />
-          <DeleteButton />
+          <DeleteContact contactId={contact.id} />
         </div>
       </div>
       <Separator />
@@ -36,30 +36,6 @@ function Contact({ contact }: ContactProps) {
         <b>Description</b>: {contact.description}
       </div>
     </div>
-  );
-}
-
-// function EditButton() {
-//   function openEditContactDialog() {
-//     console.log("Open edit contact dialog");
-//   }
-
-//   return (
-//     <Button variant="outline" size="sm" onClick={openEditContactDialog}>
-//       Edit
-//     </Button>
-//   );
-// }
-
-function DeleteButton() {
-  function openDeleteContactDialog() {
-    console.log("Open delete contact dialog");
-  }
-
-  return (
-    <Button variant="destructive" size="sm" onClick={openDeleteContactDialog}>
-      Delete
-    </Button>
   );
 }
 

@@ -4,8 +4,7 @@ import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import { clsx } from "clsx";
 
-import Button from "../Button";
-
+import Button, { type ButtonProps } from "../Button";
 import styles from "./AlertDialog.module.css";
 
 const AlertDialog = AlertDialogPrimitive.Root;
@@ -84,7 +83,8 @@ AlertDialogDescription.displayName =
 
 const AlertDialogAction = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Action>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action> &
+    ButtonProps
 >((props, ref) => (
   <AlertDialogPrimitive.Action asChild>
     <Button ref={ref} {...props} />
@@ -94,7 +94,8 @@ AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
 
 const AlertDialogCancel = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel> &
+    ButtonProps
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Cancel asChild>
     <Button
