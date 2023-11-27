@@ -1,7 +1,7 @@
 import * as React from "react";
 import Link from "next/link";
 
-import AddContactButton from "../AddContactButton";
+import AddContact from "../AddContact";
 
 import styles from "./Header.module.css";
 
@@ -11,7 +11,7 @@ function Header() {
       <Link href="/contacts" className={styles["header-link"]}>
         <h1>My Contacts</h1>
       </Link>
-      <AddContactButton />
+      <AddContact />
     </header>
   );
 }
