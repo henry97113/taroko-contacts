@@ -1,0 +1,14 @@
+.separator {
+  background-color: hsl(var(--border));
+}
+
+.separator.horizontal {
+  height: 1px;
+  width: 100%;
+  margin-block: 1rem;
+}
+.separator.vertical {
+  width: 1px;
+  height: 100%;
+  margin-inline: 1rem;
+}
