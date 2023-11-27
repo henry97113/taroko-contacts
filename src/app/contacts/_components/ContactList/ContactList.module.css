@@ -12,6 +12,13 @@
 .header h2 {
   flex-grow: 1;
   text-align: center;
+  font-size: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .header h2 {
+    font-size: 1.5rem;
+  }
 }
 
 .contact-wrapper {
