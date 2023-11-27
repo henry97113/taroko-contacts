@@ -1,6 +1,18 @@
+import { z } from "zod";
+
 import { delay } from "@/utils";
 
-export const contactsData = [
+const Contact = z.object({
+  id: z.number(),
+  first_name: z.string(),
+  last_name: z.string(),
+  job: z.string(),
+  description: z.string(),
+});
+
+export type Contact = z.infer<typeof Contact>;
+
+export const contactsData: Contact[] = [
   {
     id: 1,
     first_name: "Luke",

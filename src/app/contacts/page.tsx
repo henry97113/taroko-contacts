@@ -1,14 +1,8 @@
 import { getContacts } from "@/helpers/contacts";
+import ContactList from "./_components/ContactList";
 
 export default async function Contacts() {
-  // will render the contacts in <ContactsList />
   const contacts = await getContacts();
 
-  return (
-    <div>
-      {contacts.map((contact) => (
-        <div key={contact.id}>{contact.first_name}</div>
-      ))}
-    </div>
-  );
+  return <ContactList contacts={contacts} />;
 }
