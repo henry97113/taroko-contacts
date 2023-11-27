@@ -1,0 +1,17 @@
+.form-item :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.5rem;
+}
+
+.invalid {
+  color: hsl(var(--destructive));
+}
+
+.form-description {
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.form-message {
+  font-size: 0.875rem;
+  color: hsl(var(--destructive));
+}
