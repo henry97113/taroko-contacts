@@ -11,3 +11,7 @@
 3. Run `npm i` to install dependency.
 4. Run `npm run dev` to start the dev server.
 5. Open the page on `localhost:3001`.
+
+## Live Demo
+
+You can play it online at [https://taroko-contacts.vercel.app](https://taroko-contacts.vercel.app).
