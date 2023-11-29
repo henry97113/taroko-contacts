@@ -1,7 +1,10 @@
 "use client";
 
 import { Inter } from "next/font/google";
+
 import { Toaster } from "@/components/Toast";
+
+import { Providers } from "./providers";
 
 import "@/styles/globals.css";
 import "@/styles/variables.css";
@@ -18,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>

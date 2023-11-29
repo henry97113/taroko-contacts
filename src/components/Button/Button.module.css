@@ -80,3 +80,17 @@
   height: 2.5rem;
   width: 2.5rem;
 }
+
+.loader-icon {
+  animation: spin 1000ms linear infinite;
+  margin-inline-end: 0.5rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { HTTPError } from "ky";
-import { useSWRConfig } from "swr";
+import { Loader2 } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
   Dialog,
@@ -26,7 +27,13 @@ type EditContactProps = {
 };
 
 function EditContact({ contact }: EditContactProps) {
-  const { mutate } = useSWRConfig();
+  const queryClient = useQueryClient();
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: patchContact,
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({ queryKey: ["contacts"] });
+    },
+  });
   const { toast } = useToast();
   const [isOpen, setIsOpen] = React.useState(false);
   const formId = "edit-contact-form";
@@ -50,9 +57,7 @@ function EditContact({ contact }: EditContactProps) {
     };
 
     try {
-      await patchContact(payload);
-      await mutate("/api/contacts");
-
+      await mutateAsync(payload);
       toast({
         title: "User Edited",
         description: `Changes to ${fullName} have been saved!`,
@@ -89,7 +94,13 @@ function EditContact({ contact }: EditContactProps) {
           handleSubmit={handleSubmit}
         />
         <DialogFooter>
-          <Button type="submit" form={formId}>
+          <Button type="submit" form={formId} disabled={isPending}>
+            {isPending && (
+              <Loader2
+                className="animate-spin"
+                style={{ marginRight: "0.5rem" }}
+              />
+            )}
             Save
           </Button>
         </DialogFooter>

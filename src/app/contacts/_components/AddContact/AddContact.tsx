@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { HTTPError } from "ky";
-import { useSWRConfig } from "swr";
+import { Loader2 } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
   Dialog,
@@ -22,7 +23,14 @@ import styles from "./AddContact.module.css";
 import { postContact } from "@/helpers/contacts";
 
 export function AddContact() {
-  const { mutate } = useSWRConfig();
+  const queryClient = useQueryClient();
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: postContact,
+    mutationKey: ["addContact"],
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({ queryKey: ["contacts"] });
+    },
+  });
   const { toast } = useToast();
   const [isOpen, setIsOpen] = React.useState(false);
   const formId = "add-contact-form";
@@ -38,8 +46,7 @@ export function AddContact() {
     };
 
     try {
-      await postContact(payload);
-      await mutate("/api/contacts");
+      await mutateAsync(payload);
       toast({
         title: "New user added",
         description: `${fullName} has been added to your contacts!`,
@@ -71,6 +78,12 @@ export function AddContact() {
         <ContactForm formId={formId} handleSubmit={handleSubmit} />
         <DialogFooter>
           <Button type="submit" form={formId}>
+            {isPending && (
+              <Loader2
+                className="animate-spin"
+                style={{ marginRight: "0.5rem" }}
+              />
+            )}
             Save
           </Button>
         </DialogFooter>

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { ArrowDownAZ, ArrowDownZA } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 
 import { getContacts, type Contact as ContactType } from "@/helpers/contacts";
 import Button from "@/components/Button";
@@ -21,8 +21,10 @@ type ContactListProps = {
 };
 
 function ContactList({ initialData, sortDir }: ContactListProps) {
-  const { data: contacts } = useSWR("/api/contacts", getContacts, {
-    fallbackData: initialData,
+  const { data: contacts } = useQuery({
+    queryKey: ["contacts"],
+    queryFn: getContacts,
+    initialData,
   });
   const router = useRouter();
   const pathname = usePathname();

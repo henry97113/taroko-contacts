@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { HTTPError } from "ky";
-import { useSWRConfig } from "swr";
+import { Loader2 } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
   AlertDialog,
@@ -23,14 +24,19 @@ type DeleteContactProps = {
 };
 
 function DeleteContact({ contactId }: DeleteContactProps) {
-  const { mutate } = useSWRConfig();
+  const queryClient = useQueryClient();
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: deleteContact,
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({ queryKey: ["contacts"] });
+    },
+  });
   const { toast } = useToast();
   const [isOpen, setIsOpen] = React.useState(false);
 
   async function handleClick() {
     try {
-      await deleteContact(contactId);
-      await mutate("/api/contacts");
+      await mutateAsync(contactId);
       toast({
         title: "User deleted",
         description: `User has been deleted.`,
@@ -65,7 +71,17 @@ function DeleteContact({ contactId }: DeleteContactProps) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button variant="destructive" onClick={handleClick}>
+          <Button
+            variant="destructive"
+            onClick={handleClick}
+            disabled={isPending}
+          >
+            {isPending && (
+              <Loader2
+                className="animate-spin"
+                style={{ marginRight: "0.5rem" }}
+              />
+            )}
             Delete
           </Button>
         </AlertDialogFooter>
