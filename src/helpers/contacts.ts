@@ -2,7 +2,6 @@ import ky from "ky";
 import { z } from "zod";
 
 import { env } from "@/env";
-import { delay } from "@/utils";
 
 const baseUrl = env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -19,7 +18,6 @@ const contactsSchema = contactSchema.array();
 export type Contact = z.infer<typeof contactSchema>;
 
 export async function getContacts() {
-  await delay(2000);
   const { data } = await ky
     .get(`${baseUrl}/contacts`)
     .json<{ data: unknown }>();

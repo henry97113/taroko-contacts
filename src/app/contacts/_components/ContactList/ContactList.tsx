@@ -12,6 +12,7 @@ import VisuallyHidden from "@/components/VisuallyHidden";
 
 import Contact from "../Contact";
 import styles from "./ContactList.module.css";
+import ContactListWrapper from "../ContactListWrapper";
 
 type SortDirection = "asc" | "desc";
 
@@ -61,30 +62,26 @@ function ContactList({ initialData }: ContactListProps) {
   }
 
   return (
-    <Container>
-      <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <h2>Contacts</h2>
-          <Button
-            size="icon"
-            title="Sort by last name"
-            onClick={() => {
-              const nextDir = sortDir === "asc" ? "desc" : "asc";
-              // <pathname>?sort=asc
-              router.push(pathname + "?" + createQueryString("sort", nextDir));
-            }}
-          >
-            {sortDir === "asc" ? <ArrowDownAZ /> : <ArrowDownZA />}
-            <VisuallyHidden>Sort by last name</VisuallyHidden>
-          </Button>
-        </div>
-        <div className={styles["contact-wrapper"]}>
-          {sortedContacts.map((contact) => (
-            <Contact key={contact.id} contact={contact} isPlaceholder={false} />
-          ))}
-        </div>
-      </div>
-    </Container>
+    <ContactListWrapper
+      actionButton={
+        <Button
+          size="icon"
+          title="Sort by last name"
+          onClick={() => {
+            const nextDir = sortDir === "asc" ? "desc" : "asc";
+            // <pathname>?sort=asc
+            router.push(pathname + "?" + createQueryString("sort", nextDir));
+          }}
+        >
+          {sortDir === "asc" ? <ArrowDownAZ /> : <ArrowDownZA />}
+          <VisuallyHidden>Sort by last name</VisuallyHidden>
+        </Button>
+      }
+    >
+      {sortedContacts.map((contact) => (
+        <Contact key={contact.id} contact={contact} isPlaceholder={false} />
+      ))}
+    </ContactListWrapper>
   );
 }
 

@@ -1,31 +1,13 @@
-import Container from "@/components/Container";
 import Contact from "./_components/Contact";
-
-import styles from "./_components/ContactList/ContactList.module.css";
-import Button from "@/components/Button";
+import ContactListWrapper from "./_components/ContactListWrapper";
 
 export default function ContactsLoading() {
   return (
-    <Container>
-      <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <h2>Contacts</h2>
-          <Button
-            size="icon"
-            style={{
-              backgroundColor: "transparent",
-              borderColor: "transparent",
-              pointerEvents: "none",
-            }}
-          ></Button>
-        </div>
-        <div className={styles["contact-wrapper"]}>
-          {MOCK_DATA.map((data) => (
-            <Contact key={data.id} contact={data} isPlaceholder={true} />
-          ))}
-        </div>
-      </div>
-    </Container>
+    <ContactListWrapper>
+      {MOCK_DATA.map((data) => (
+        <Contact key={data.id} contact={data} isPlaceholder={true} />
+      ))}
+    </ContactListWrapper>
   );
 }
 
