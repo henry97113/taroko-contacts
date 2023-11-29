@@ -13,22 +13,20 @@ import VisuallyHidden from "@/components/VisuallyHidden";
 import Contact from "../Contact";
 import styles from "./ContactList.module.css";
 import ContactListWrapper from "../ContactListWrapper";
-
-type SortDirection = "asc" | "desc";
+import { type SortDirection } from "../../_helpers/sortDir";
 
 type ContactListProps = {
   initialData: ContactType[];
+  sortDir: SortDirection;
 };
 
-function ContactList({ initialData }: ContactListProps) {
+function ContactList({ initialData, sortDir }: ContactListProps) {
   const { data: contacts } = useSWR("/api/contacts", getContacts, {
     fallbackData: initialData,
   });
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams()!;
-
-  const sortDir = (searchParams.get("sort") ?? "asc") as SortDirection;
 
   const sortedContacts = React.useMemo(
     () =>
