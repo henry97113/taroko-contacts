@@ -19,7 +19,9 @@ export const contactFormSchema = z.object({
     .max(50, {
       message: "Last name must be at most 50 characters.",
     }),
-  job: z.string(),
+  job: z.string().min(1, {
+    message: "Job field is required.",
+  }),
   description: z.string(),
 });
 
