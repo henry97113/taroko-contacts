@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { HTTPError } from "ky";
 import { useSWRConfig } from "swr";
 
 import {
@@ -35,11 +36,13 @@ function DeleteContact({ contactId }: DeleteContactProps) {
         description: `User has been deleted.`,
       });
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Something went wrong.",
-        description: `Something went wrong. Please try again later.`,
-      });
+      if (error instanceof HTTPError) {
+        toast({
+          variant: "destructive",
+          title: "Failed to delete the contact.",
+          description: error.message,
+        });
+      }
     } finally {
       setIsOpen(false);
     }

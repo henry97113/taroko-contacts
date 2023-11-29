@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { HTTPError } from "ky";
 import { useSWRConfig } from "swr";
 
 import {
@@ -45,11 +46,13 @@ export function AddContact() {
       });
       setIsOpen(false);
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Something went wrong.",
-        description: `Something went wrong. Please try again later.`,
-      });
+      if (error instanceof HTTPError) {
+        toast({
+          variant: "destructive",
+          title: "Failed to create a new contact.",
+          description: error.message,
+        });
+      }
     }
   }
 
