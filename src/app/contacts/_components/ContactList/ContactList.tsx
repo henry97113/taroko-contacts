@@ -12,7 +12,6 @@ import VisuallyHidden from "@/components/VisuallyHidden";
 
 import Contact from "../Contact";
 import styles from "./ContactList.module.css";
-import LoadingSpinner from "../LoadingSpinner";
 
 type SortDirection = "asc" | "desc";
 
@@ -21,7 +20,7 @@ type ContactListProps = {
 };
 
 function ContactList({ initialData }: ContactListProps) {
-  const { data: contacts, isLoading } = useSWR("/api/contacts", getContacts, {
+  const { data: contacts } = useSWR("/api/contacts", getContacts, {
     fallbackData: initialData,
   });
   const router = useRouter();
@@ -50,10 +49,6 @@ function ContactList({ initialData }: ContactListProps) {
     },
     [searchParams],
   );
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
 
   if (contacts.length === 0) {
     return (
@@ -85,7 +80,7 @@ function ContactList({ initialData }: ContactListProps) {
         </div>
         <div className={styles["contact-wrapper"]}>
           {sortedContacts.map((contact) => (
-            <Contact key={contact.id} contact={contact} />
+            <Contact key={contact.id} contact={contact} isPlaceholder={false} />
           ))}
         </div>
       </div>

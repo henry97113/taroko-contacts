@@ -1,4 +1,8 @@
+"use client";
+
 import * as React from "react";
+import { clsx } from "clsx";
+import { Redacted_Script } from "next/font/google";
 
 import { type Contact as ContactType } from "@/helpers/contacts";
 
@@ -8,15 +12,26 @@ import DeleteContact from "../DeleteContact";
 import EditContact from "../EditContact";
 import styles from "./Contact.module.css";
 
+const RedactedScript = Redacted_Script({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+
 type ContactProps = {
   contact: ContactType;
+  isPlaceholder: boolean;
 };
 
-function Contact({ contact }: ContactProps) {
+function Contact({ contact, isPlaceholder }: ContactProps) {
   const fullName = `${contact.first_name} ${contact.last_name}`.trim();
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={clsx(
+        styles.wrapper,
+        isPlaceholder && RedactedScript.className,
+      )}
+    >
       <div className={styles.top}>
         <div className={styles["contact-info"]}>
           <div>
@@ -26,7 +41,10 @@ function Contact({ contact }: ContactProps) {
             <b>Job</b>: {contact.job}
           </div>
         </div>
-        <div className={styles.actions}>
+        <div
+          className={styles.actions}
+          style={isPlaceholder ? { pointerEvents: "none" } : undefined}
+        >
           <EditContact contact={contact} />
           <DeleteContact contactId={contact.id} />
         </div>
