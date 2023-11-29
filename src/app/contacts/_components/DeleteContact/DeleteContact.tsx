@@ -38,7 +38,7 @@ function DeleteContact({ contactId }: DeleteContactProps) {
     try {
       await mutateAsync(contactId);
       toast({
-        title: "User deleted",
+        title: "User deleted.",
         description: `User has been deleted.`,
       });
     } catch (error) {
