@@ -11,6 +11,7 @@
 
 .contact-info {
   flex-grow: 1;
+  min-height: 80px;
 }
 
 .actions {

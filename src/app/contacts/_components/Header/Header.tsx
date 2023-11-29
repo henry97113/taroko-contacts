@@ -1,7 +1,8 @@
 import * as React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
-import AddContact from "../AddContact";
+const AddContact = dynamic(() => import("../AddContact"), { ssr: false });
 
 import styles from "./Header.module.css";
 

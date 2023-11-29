@@ -3,14 +3,16 @@
 import * as React from "react";
 import { clsx } from "clsx";
 import { Redacted_Script } from "next/font/google";
+import dynamic from "next/dynamic";
 
 import { type Contact as ContactType } from "@/helpers/contacts";
 
 import Separator from "@/components/Separator";
 
-import DeleteContact from "../DeleteContact";
-import EditContact from "../EditContact";
 import styles from "./Contact.module.css";
+
+const DeleteContact = dynamic(() => import("../DeleteContact"));
+const EditContact = dynamic(() => import("../EditContact"));
 
 const RedactedScript = Redacted_Script({
   weight: ["400", "700"],
@@ -41,13 +43,12 @@ function Contact({ contact, isPlaceholder }: ContactProps) {
             <b>Job</b>: {contact.job}
           </div>
         </div>
-        <div
-          className={styles.actions}
-          style={isPlaceholder ? { pointerEvents: "none" } : undefined}
-        >
-          <EditContact contact={contact} />
-          <DeleteContact contactId={contact.id} />
-        </div>
+        {!isPlaceholder && (
+          <div className={styles.actions}>
+            <EditContact contact={contact} />
+            <DeleteContact contactId={contact.id} />
+          </div>
+        )}
       </div>
       <Separator />
       <div className={styles.description}>
