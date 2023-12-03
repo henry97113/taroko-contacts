@@ -50,6 +50,12 @@
   }
 }
 
+@media (min-width: 640px) {
+  .AlertDialogContent {
+    border-radius: var(--radius);
+  }
+}
+
 .AlertDialogHeader {
   display: flex;
   flex-direction: column;
