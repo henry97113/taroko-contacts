@@ -1,16 +1,14 @@
 "use client";
 
-import * as React from "react";
 import { clsx } from "clsx";
 import { Redacted_Script } from "next/font/google";
-
-import { type Contact as ContactType } from "@/helpers/contacts";
-
-import Separator from "@/components/Separator";
+import * as React from "react";
 
 import DeleteContact from "../DeleteContact";
 import EditContact from "../EditContact";
 import styles from "./Contact.module.css";
+import Separator from "@/components/Separator";
+import { type Contact as ContactType } from "@/helpers/contacts";
 
 const RedactedScript = Redacted_Script({
   weight: ["400", "700"],
@@ -26,7 +24,7 @@ function Contact({ contact, isPlaceholder }: ContactProps) {
   const fullName = `${contact.first_name} ${contact.last_name}`.trim();
 
   return (
-    <div
+    <li
       className={clsx(
         styles.wrapper,
         isPlaceholder && RedactedScript.className,
@@ -52,7 +50,7 @@ function Contact({ contact, isPlaceholder }: ContactProps) {
       <div className={styles.description}>
         <b>Description</b>: {contact.description}
       </div>
-    </div>
+    </li>
   );
 }
 

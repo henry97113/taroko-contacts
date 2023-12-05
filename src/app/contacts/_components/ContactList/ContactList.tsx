@@ -1,19 +1,18 @@
 "use client";
 
-import * as React from "react";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowDownAZ, ArrowDownZA } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import * as React from "react";
 
-import { getContacts, type Contact as ContactType } from "@/helpers/contacts";
+import { type SortDirection } from "../../_helpers/sortDir";
+import Contact from "../Contact";
+import ContactListWrapper from "../ContactListWrapper";
+import styles from "./ContactList.module.css";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import VisuallyHidden from "@/components/VisuallyHidden";
-
-import Contact from "../Contact";
-import styles from "./ContactList.module.css";
-import ContactListWrapper from "../ContactListWrapper";
-import { type SortDirection } from "../../_helpers/sortDir";
+import { getContacts, type Contact as ContactType } from "@/helpers/contacts";
 
 type ContactListProps = {
   initialData: ContactType[];

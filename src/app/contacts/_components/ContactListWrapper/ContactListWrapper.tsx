@@ -1,8 +1,7 @@
 import * as React from "react";
 
-import Container from "@/components/Container";
-
 import styles from "./ContactListWrapper.module.css";
+import Container from "@/components/Container";
 
 type ContactListWrapperProps = {
   actionButton?: React.ReactNode;
@@ -20,7 +19,7 @@ function ContactListWrapper({
           <h2>Contacts</h2>
           {actionButton}
         </div>
-        <div className={styles["contact-wrapper"]}>{children}</div>
+        <ul className={styles["contact-wrapper"]}>{children}</ul>
       </div>
     </Container>
   );

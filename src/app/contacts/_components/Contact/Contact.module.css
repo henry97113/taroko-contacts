@@ -2,6 +2,7 @@
   border: 1px solid hsl(var(--border));
   padding: 0.5rem 1rem;
   border-radius: var(--radius);
+  display: block;
 }
 
 .top {
