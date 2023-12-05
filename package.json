@@ -31,6 +31,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
     "@next/eslint-plugin-next": "^14.0.3",
     "@playwright/test": "^1.40.1",
     "@tanstack/eslint-plugin-query": "^5.8.4",
@@ -41,6 +42,8 @@
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "eslint": "^8.54.0",
+    "eslint-plugin-import": "^2.29.0",
+    "msw": "^2.0.10",
     "prettier": "^3.1.0",
     "typescript": "^5.1.6"
   }

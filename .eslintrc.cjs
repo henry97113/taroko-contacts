@@ -4,7 +4,7 @@ const config = {
   parserOptions: {
     project: true,
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "import"],
   extends: [
     "plugin:@next/next/recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
@@ -30,6 +30,20 @@ const config = {
       "error",
       {
         checksVoidReturn: { attributes: false },
+      },
+    ],
+    "import/order": [
+      "warn",
+      {
+        alphabetize: { order: "asc", caseInsensitive: true },
+        groups: [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+        ],
       },
     ],
   },
