@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 import { http, HttpResponse } from "msw";
 import { type RequestHandler } from "msw";
-import { env } from "@/env";
 
-const API_BASE_URL = env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3001/api";
 
 export function createContact() {
   return {
